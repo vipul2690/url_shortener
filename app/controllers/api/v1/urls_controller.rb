@@ -26,7 +26,7 @@ class Api::V1::UrlsController < ApplicationController
     def update
         if @url
             @url.update(url_params)
-            render json: { message: 'Url updated successfully' }, status: 200
+            render json: @url, status: 200
         else
             render error: {error: 'Unable to update url data.'}, status: 400
         end
@@ -54,9 +54,6 @@ class Api::V1::UrlsController < ApplicationController
 
     def shorten_url
         @url = Url.new(url_params)
-        full_url = url_params[:full_url]
-        @url = Url.new(url_params)
-        @url.short_url = full_url ? @url.short : ''
-        puts @url
+        @url.short_url = url_params[:full_url] ? @url.short : ''
     end
 end
